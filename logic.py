@@ -11,6 +11,7 @@ class Logic(QMainWindow, Ui_MainWindow):
         self.__flags:int = 3
         self.__time:int = 0
         self.__running:bool = True
+
         self.grid_rows:list = ["A", "B", "C", "D", "E"]
         self.grid_columns:list = ["1", "2", "3", "4", "5"]
         self.grid:list = [[],[],[],[],[]]
@@ -61,7 +62,15 @@ class Logic(QMainWindow, Ui_MainWindow):
 
 
     def click(self) -> None:
+        '''
+        Definately the most complex function here.
+        This will check if a clicked button is a mine or not.
+        mines will broadcast lose, otherwise the tile will be
+        revealed.
+        :return:
+        '''
         if self.__running:
+            ##Set name of the button, and location of the tile on the grid
             button = self.sender()
             tile = button.objectName()
             if tile in self.mines:
@@ -90,13 +99,7 @@ class Logic(QMainWindow, Ui_MainWindow):
                                 print("breaking")
                                 self.break_adjacent(self.grid.index(row), row.index(col))
 
-                #print(tile)
-                #button.setStyleSheet("background-color: brown")
-                #button.setText()
-                #return
-
-
-    def give_number(self, row, col):
+    def give_number(self, row, col) -> int:
         '''
         This function returns the amount of mines around a clicked tile
         :param row:
@@ -123,6 +126,12 @@ class Logic(QMainWindow, Ui_MainWindow):
         return number
 
     def break_adjacent(self, row, col):
+        '''
+        will click all adjacent tiles that aren't already revealed.
+        :param row:
+        :param col:
+        :return:
+        '''
         places = [-1, 0, 1]
         for i in places:
             if i == -1 and row == 0:
