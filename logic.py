@@ -234,6 +234,8 @@ class Logic(QMainWindow, Ui_MainWindow):
             self.Best_Times_Label.setText(f"Top 3 Times:\n{first:>12}")
         elif third == None:
             self.Best_Times_Label.setText(f"Top 3 Times:\n{first:>12}\n{second:>12}")
+        else:
+            self.Best_Times_Label.setText(f"Top 3 Times:\n{first:>12}\n{second:>12}\n{third:>12}")
         #self.Best_Times_Label.setText(f"Top 3 Times:\n{first:>12}\n{second:>12}\n{third:>12}")
         self.Win_Label.show()
         self.Win_Label.setStyleSheet("color: green")
@@ -277,6 +279,8 @@ class Logic(QMainWindow, Ui_MainWindow):
             self.Best_Times_Label.setText(f"Top 3 Times:\n{first:>12}")
         elif third == None:
             self.Best_Times_Label.setText(f"Top 3 Times:\n{first:>12}\n{second:>12}")
+        else:
+            self.Best_Times_Label.setText(f"Top 3 Times:\n{first:>12}\n{second:>12}\n{third:>12}")
         #self.Best_Times_Label.setText(f"Top 3 Times:\n{first:>12}\n{second:>12}\n{third:>12}")
         self.Win_Label.show()
         self.Win_Label.setStyleSheet("color: maroon")
