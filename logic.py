@@ -3,6 +3,7 @@ from PyQt6.QtWidgets import *
 from gui import *
 import random
 import csv
+from pathlib import *
 
 #End screen
 #reset button
@@ -37,6 +38,16 @@ class Logic(QMainWindow, Ui_MainWindow):
         self.Reset_Button.clicked.connect(lambda: self.create_grid())
 
         self.timer.timeout.connect(self.update_timer)
+
+        #create csv
+        myfile = Path("best_times.csv")
+        if myfile.exists():
+            pass
+        else:
+            with open("best_times.csv", "w", newline="") as csvfile:
+                csv_writer = csv.writer(csvfile)
+
+
 
 
 
@@ -153,7 +164,7 @@ class Logic(QMainWindow, Ui_MainWindow):
         print("-----")
         return number
 
-    def break_adjacent(self, row, col):
+    def break_adjacent(self, row, col) -> None:
         '''
         will click all adjacent tiles that aren't already revealed.
         :param row:
@@ -184,7 +195,7 @@ class Logic(QMainWindow, Ui_MainWindow):
                         button.click()
         pass
 
-    def win(self):
+    def win(self) -> None:
         '''
         will be called once all safe tiles have been pressed.
         Will make a cool little win text show up.
@@ -217,13 +228,19 @@ class Logic(QMainWindow, Ui_MainWindow):
                     second = time[0]
                 elif time[0] < third:
                     third = time[0]
-        self.Best_Times_Label.setText(f"Top 3 Times:\n{first:>12}\n{second:>12}\n{third:>12}")
+        if first == None:
+            self.Best_Times_Label.setText(f"Top 3 Times:")
+        elif second == None:
+            self.Best_Times_Label.setText(f"Top 3 Times:\n{first:>12}")
+        elif third == None:
+            self.Best_Times_Label.setText(f"Top 3 Times:\n{first:>12}\n{second:>12}")
+        #self.Best_Times_Label.setText(f"Top 3 Times:\n{first:>12}\n{second:>12}\n{third:>12}")
         self.Win_Label.show()
         self.Win_Label.setStyleSheet("color: green")
         self.Win_Label.setText("Win!")
         self.__running = False
 
-    def lose(self):
+    def lose(self) -> None:
         '''
         Will be called if you hit a mine!
         Will make a cool little lose text show up.
@@ -254,13 +271,19 @@ class Logic(QMainWindow, Ui_MainWindow):
                     second = time[0]
                 elif time[0] < third:
                     third = time[0]
-        self.Best_Times_Label.setText(f"Top 3 Times:\n{first:>12}\n{second:>12}\n{third:>12}")
+        if first == None:
+            self.Best_Times_Label.setText(f"Top 3 Times:")
+        elif second == None:
+            self.Best_Times_Label.setText(f"Top 3 Times:\n{first:>12}")
+        elif third == None:
+            self.Best_Times_Label.setText(f"Top 3 Times:\n{first:>12}\n{second:>12}")
+        #self.Best_Times_Label.setText(f"Top 3 Times:\n{first:>12}\n{second:>12}\n{third:>12}")
         self.Win_Label.show()
         self.Win_Label.setStyleSheet("color: maroon")
         self.Win_Label.setText("Lose!")
         self.__running = False
 
-    def update_timer(self):
+    def update_timer(self) -> None:
         self.__timer_running = True
         self.time = self.time.addMSecs(10)
         self.Timer_Label.setText(f"Time: {self.time.hour():02}:{self.time.minute():02}:{self.time.second():02}")
